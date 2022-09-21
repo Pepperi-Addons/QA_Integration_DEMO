@@ -17,7 +17,7 @@ jobs:
       - name: Submit for QA - Addons Api Tests
         uses: satak/webrequest-action@master
         with:
-          url: ${{ secrets.JENKINS_GITHUB_HOST }}${{ secrets.JENKINS_GITHUB_JOB }}/buildWithParameters?token=11b5a3e31326f12fc1c30f12b6c860341c&GitRepo=${{$GITHUB_REPOSITORY}}
+          url: ${{ secrets.JENKINS_GITHUB_HOST }}${{ secrets.JENKINS_GITHUB_JOB }}/buildWithParameters?token=11b5a3e31326f12fc1c30f12b6c860341c&GitRepo=$env:.GITHUB_REPOSITORY
           method: GET
           username: ${{ secrets.JENKINS_GITHUB_USER }}
           password: ${{ secrets.JENKINS_GITHUB_PASS }}
