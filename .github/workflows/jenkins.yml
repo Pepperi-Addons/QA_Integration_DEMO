@@ -1,31 +1,25 @@
-name: TriggerJenkins
+name: jenkins-CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ "main" ]
-  workflow_dispatch:
-  workflow_call:
-    secrets:
-      JENKINS_GITHUB_URL:
-        required: true
-      JENKINS_GITHUB_USER:
-        required: true
-      JENKINS_GITHUB_TOKEN:
-        required: true
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  run_addons_api_tests:
+  # This workflow contains a single job called "build"
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: Submit for Addons Api Tests
-      uses: jabbukka/jenkins-trigger@main
-      with:
-        url: ${{ secrets.JENKINS_GITHUB_URL }}
-        job_name: "GitHubAddons"
-        # parameter: Job parameter in JSON format. ex) {"param1":"value1"}
-        user_name: ${{ secrets.JENKINS_GITHUB_USER }}
-        api_token: ${{ secrets.JENKINS_GITHUB_TOKEN }}
-        wait: "true"
-        timeout: "1000"
-    
+      - name: Trigger jenkins job
+        uses: joshlk/jenkins-githubaction@master
+        with:
+          url: https://actions.pepperi.com
+          job_name: "API Testing Framework/Addons Api Tests/GitHubAddons"
+          username: ${{ secrets.JENKINS_GITHUB_USER }}
+          api_token: ${{ secrets.JENKINS_GITHUB_TOKEN }}
+          timeout: "1000"
