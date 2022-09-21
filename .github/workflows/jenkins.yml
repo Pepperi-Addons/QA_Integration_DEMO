@@ -16,10 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger jenkins job
-        uses: joshlk/jenkins-githubaction@master
+        uses: jabbukka/jenkins-trigger@main
         with:
-          url: https://actions.pepperi.com
+          url: "https://actions.pepperi.com"
           job_name: "API Testing Framework/Addons Api Tests/GitHubAddons"
-          username: ${{ secrets.JENKINS_GITHUB_USER }}
+          user_name: ${{ secrets.JENKINS_GITHUB_USER }}
           api_token: ${{ secrets.JENKINS_GITHUB_TOKEN }}
+          wait: "true"
           timeout: "1000"
