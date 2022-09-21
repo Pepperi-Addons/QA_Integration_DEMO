@@ -15,12 +15,13 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger jenkins job
-        uses: jabbukka/jenkins-trigger@main
-        with:
-          url: "https://actions.pepperi.com"
-          job_name: "API Testing Framework/Addons Api Tests/GitHubAddons"
-          user_name: ${{ secrets.JENKINS_GITHUB_USER }}
-          api_token: ${{ secrets.JENKINS_GITHUB_TOKEN }}
-          wait: "true"
-          timeout: "1000"
+          - name: "Trigger jenkins job"
+            uses: GoldenspearLLC/build-jenkins-job@master
+            with:
+              jenkins-url: "https://actions.pepperi.com"
+              jenkins-token: ${{ secrets.JENKINS_GITHUB_TOKEN }}
+              user: ${{ secrets.JENKINS_GITHUB_USER }}
+              job-path: "API Testing Framework/Addons Api Tests/GitHubAddons"
+              job-params: "{'GitRepo': 'value1'}"
+          - name: Get job status
+            run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
