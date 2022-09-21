@@ -10,18 +10,16 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    name: Build
+  trigger-a-jenkins-job:
     runs-on: ubuntu-latest
     steps:
-          - name: "Trigger jenkins job"
-            uses: GoldenspearLLC/build-jenkins-job@master
-            with:
-              jenkins-url: "https://actions.pepperi.com"
-              jenkins-token: ${{ secrets.JENKINS_GITHUB_TOKEN }}
-              user: ${{ secrets.JENKINS_GITHUB_USER }}
-              job-path: "API Testing Framework/Addons Api Tests/GitHubAddons"
-              job-params: "{'GitRepo': 'value1'}"
-          - name: Get job status
-            run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
+      - id: triggerjenkinsjob
+        uses: mickeygoussetorg/trigger-jenkins-job@v1
+        with:
+          jenkins-server:  "${{ secrets.JENKINS_GITHUB_URL }}" # URL of the jenkins server. ex: http://myjenkins.acme.com:8080
+          jenkins-job: "API Testing Framework/Addons Api Tests/GitHubAddons" # The name of the jenkins job to run
+          jenkins-username: ${{ secrets.JENKINS_GITHUB_USER }} # user name for accessing jenkins
+          jenkins-pat: ${{ secrets.JENKINS_GITHUB_TOKEN }} # personal Access token for accessing Jenkins
+          poll-time: 10 # how often (seconds) to poll the jenkins server for results
+          timeout-value: 600 # How long (seconds) to poll before timing out the action
+          verbose: true # true/false - turns on extra logging
