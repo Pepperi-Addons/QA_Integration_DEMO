@@ -1,0 +1,16 @@
+name: Jenkins
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  workflow_call:
+    secrets:
+      PEPPERI_ADDON_PUBLISH_KEY:
+        required: true
+      PEPPERI_ADDON_INFRA_SDK_READ_ACCESS:
+      PEPPERI_ADDON_JIRA_TESTS_URL:
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    
